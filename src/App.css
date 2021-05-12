@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@100;300;400;500;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap');
+@import url(https://fonts.googleapis.com/css?family=Orbitron:regular,500,600,700,800,900);
+@import url(https://fonts.googleapis.com/css?family=Raleway:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,regular,italic,600,600italic,700,700italic,800,800italic);
+@import url(https://fonts.googleapis.com/css?family=Arvo:regular,italic,700,700italic);
+
+@font-face{
+  font-family: 'Milletun';
+  src:local('Milletun') ,  url('./fonts/Milletun/Milletun.ttf'), format('truetype');
+  font-weight:bold;
+  font-style:normal;
+}
+
+:root{
+  --font-main : 'Quicksand', sans-serif;
+  --font-train : 'Milletun', sans-serif;
+  --font-clock : 'Orbitron', sans-serif;
+  --font-para : 'Arvo', sans-serif;
+  --font-secondary : 'Open Sans', sans-serif;
+  --red-primary : #DA0000;
+}
+
+
+
+
+
+body{
+  margin:0px;
+  padding:0px;
+}
+
