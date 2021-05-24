@@ -1,5 +1,5 @@
 const youtube_api_key = "AIzaSyA_qkqffsbexnXJ9ipdpDIvUXqoJFlucVc";
-const channel_id = "UCK8sQmJBp8GCxrOtXWBpyEA&key=AIzaSyA_qkqffsbexnXJ9ipdpDIvUXqoJFlucVc";
+const channel_id = "UCNaST5ZYBVjPOzhzU9lA7XA";
 const get_playlist_id_url =`https://youtube.googleapis.com/youtube/v3/playlists?part=id&channelId=${channel_id}&key=${youtube_api_key}`;
 const get_playlist_items_array_url = `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&key=${youtube_api_key}&maxResults=5`;
 

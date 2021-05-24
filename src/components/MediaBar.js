@@ -11,6 +11,7 @@ import '../stylesheets/VideoCarousel.css';
 import {CurrentMediaWindow, CurrentPlayingVideoContext, VideoAllLoadedContext} from '../utlities/Contexts';
 import bg from '../image/sample_images/pranks_blog_background.jpg'
 import youtube_bg from '../image/sample_images/youtube_thumbnail.jpg'
+import axios from 'axios';
 function MediaIntroBar(props){
     let [select_index, set_select_index] = useContext(CurrentMediaWindow);
     let nav_element = useRef(null);
@@ -393,6 +394,12 @@ function BlogGridUnit(props){
             tag : 0
         },
     ]);
+    useEffect(()=>{
+        axios.get('https://kem-palty-admin-panel.herokuapp.com/api/blog').then((data)=>{
+                console.log(data.data);
+            }
+        );
+    })
     return(
     <div className="blogs-grid-wrapper">
         <SubHeading text={"Blogs <i>2021</i>"}/>
