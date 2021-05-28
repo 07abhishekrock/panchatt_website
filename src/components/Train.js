@@ -32,7 +32,7 @@ function Train(props){
                         setTimeout(()=>{
                             //uncomment the below line to start animation of train, I disabled it because i was sick of looking at it.
 
-                            stage === 5 ? set_stage(1) : set_stage(stage + 1);
+                            // stage === 5 ? set_stage(1) : set_stage(stage + 1);
 
                         },4000);
                     }
@@ -48,11 +48,37 @@ function Train(props){
 }
 
 function TrainAssembly(props){
+    let [hrs , set_hrs] = useState((new Date()).getHours());
+    let [mins , set_mins] = useState((new Date()).getMinutes());
+
+
+
+    //uncomment the below code to start the platform clock
+
+    // useEffect(()=>{
+
+    //     //set the current time
+
+    //     setTimeout(()=>{
+    //         if(mins === 59){
+    //             set_mins(0);
+    //             if(hrs === 23){
+    //                 set_hrs(0);
+    //                 return;
+    //             }
+    //             set_hrs(hrs + 1);
+    //             return;
+    //         }
+    //         set_mins(mins + 1);
+    //     },60000)
+
+    // },[mins, hrs])
+
     return(
         <div className="train-assembly-wrapper">
             <div className="train-assembly">
                 <div className="platform-clock">
-                    <p>23:30</p>
+                    <p>{String(hrs).length > 1 ? hrs : `0${hrs}`}:{String(mins).length > 1 ? mins : `0${mins}`}</p>
                 </div>
                 <div className="platform-back">
                 </div>

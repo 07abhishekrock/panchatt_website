@@ -5,16 +5,14 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,regular,italic,600,600italic,700,700italic,800,800italic);
 @import url(https://fonts.googleapis.com/css?family=Arvo:regular,italic,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=Merriweather:300,300italic,regular,italic,700,700italic,900,900italic);
+@import url(https://fonts.googleapis.com/css?family=Nunito:200,200italic,300,300italic,regular,italic,600,600italic,700,700italic,800,800italic,900,900italic);
 
-@font-face{
-  font-family: 'Milletun';
-  src:local('Milletun') ,  url('./fonts/Milletun/Milletun.ttf'), format('truetype');
-  font-weight:bold;
-  font-style:normal;
-}
+
 
 :root{
-  --font-main : 'Quicksand', sans-serif;
+  /* --font-main : 'Quicksand', sans-serif; */
+  --font-main:'Nunito', sans-serif;
   --font-train : 'Milletun', sans-serif;
   --font-clock : 'Orbitron', sans-serif;
   --font-para : 'Arvo', sans-serif;
@@ -29,5 +27,7 @@
 body{
   margin:0px;
   padding:0px;
+  background-image:url('./image/sample_images/bg.svg');
+  background-size:contain;
 }
 

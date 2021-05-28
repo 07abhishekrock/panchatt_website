@@ -1,4 +1,6 @@
-
+*{
+    --engine-width : 1223px;
+}
 div.train-assembly{
     position:relative;
     width:1600px;
@@ -95,7 +97,7 @@ div.train-assembly>div.platform-front::after{
 
 div.train-assembly>div.train{
     --coach-count:4;
-    width:calc(calc(1 + var(--coach-count)) * 1050px);
+    width:calc(calc(var(--coach-count)) * 1050px + var(--engine-width));
     height:400px;
     position:absolute;
     display:flex;
@@ -106,12 +108,12 @@ div.train-assembly>div.train{
 }
 
 div.train>div.engine{
-    width:970px;
+    width:1223px;
     height:400px;
     position:relative;
-    top:10px;
+    /* top:10px; */
     background-size:cover;
-    background-image:url('../image/icons/engine_main.svg');
+    background-image:url('../image/icons/steam_engine.svg');
 }
 
 div.train>div.coach{
@@ -179,34 +181,34 @@ div.train[stage="5"]{
         transform:translateX(0px);
     }
     to{
-        transform:translateX(calc(-1 * calc(970px + 50vw + calc(0.5 * 1050px * 1))));
+        transform:translateX(calc(-1 * calc(var(--engine-width) + 50vw + calc(0.5 * 1050px * 1))));
     }
 }
 
 @keyframes second-coach-entry{
     from{
-        transform:translateX(calc(-1 * calc(970px + 50vw + calc(0.5 * 1050px * 1))));
+        transform:translateX(calc(-1 * calc(var(--engine-width) + 50vw + calc(0.5 * 1050px * 1))));
     }
     to{
-        transform:translateX(calc(-1 * calc(970px + 50vw + calc(0.5 * 1050px * 3))));
+        transform:translateX(calc(-1 * calc(var(--engine-width) + 50vw + calc(0.5 * 1050px * 3))));
     }
 }
 
 @keyframes third-coach-entry{
     from{
-        transform:translateX(calc(-1 * calc(970px + 50vw + calc(0.5 * 1050px * 3))));
+        transform:translateX(calc(-1 * calc(var(--engine-width) + 50vw + calc(0.5 * 1050px * 3))));
     }
     to{
-        transform:translateX(calc(-1 * calc(970px + 50vw + calc(0.5 * 1050px * 5))));
+        transform:translateX(calc(-1 * calc(var(--engine-width) + 50vw + calc(0.5 * 1050px * 5))));
     }
 }
 
 @keyframes fourth-coach-entry{
     from{
-        transform:translateX(calc(-1 * calc(970px + 50vw + calc(0.5 * 1050px * 5))));
+        transform:translateX(calc(-1 * calc(var(--engine-width) + 50vw + calc(0.5 * 1050px * 5))));
     }
     to{
-        transform:translateX(calc(-1 * calc(970px + 50vw + calc(0.5 * 1050px * 7))));
+        transform:translateX(calc(-1 * calc(var(--engine-width) + 50vw + calc(0.5 * 1050px * 7))));
     }
 }
 
@@ -214,10 +216,10 @@ div.train[stage="5"]{
 
 @keyframes fifth-coach-entry{
     from{
-        transform:translateX(calc(-1 * calc(970px + 50vw + calc(0.5 * 1050px * 7))));
+        transform:translateX(calc(-1 * calc(var(--engine-width) + 50vw + calc(0.5 * 1050px * 7))));
     }
     to{
-        transform:translateX(calc(-1 * calc(970px + 50vw + calc(0.5 * 1050px * 10))));
+        transform:translateX(calc(-1 * calc(var(--engine-width) + 50vw + calc(0.5 * 1050px * 10))));
     }
 }
 

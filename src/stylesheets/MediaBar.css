@@ -61,21 +61,29 @@ div.media-intro-bar>div:first-child{
 }
 div.media-intro-bar p{
     grid-column:1 / 2;
+    font-family: var(--font-main);
     grid-row:1;
-    line-height:1.4em;
+    font-weight:550;
+    line-height:1em;
+    font-size:0.9em;
     align-self:center;
+    letter-spacing:0.02em;
+    width:90%;
 }
 div.media-intro-bar p>b{
-    font-size:2em;
+    font-size:1.2em;
     color:var(--red-primary);
 }
 div.media-intro-bar div.panchatt-icon{
     grid-column: 2 / 3;
+    background-size:contain;
+    height:80%;
+    align-self:center;
+    background-position:center;
+    background-image:url('../image/icons/pedestal.svg');
+    background-repeat:no-repeat;
 }
 
-div.media-intro-bar div.panchatt-icon>svg{
-    width:100%;
-}
 
 .fixed-class{
     position:fixed;
@@ -123,6 +131,7 @@ div.media-intro-bar>div:last-child>div{
 }
 div.media-intro-bar>div:last-child>div span{
     color:black;
+    overflow-x:hidden;
     text-align:center;
     display:block;
     font-family:var(--font-para);
@@ -131,6 +140,31 @@ div.media-intro-bar>div:last-child>div span{
     margin:0px 1em;
     transition:flex-grow 0.2s ease-in;
     cursor:pointer;
+    position:relative;
+}
+
+div.media-intro-bar>div:last-child>div span::after{
+    content:"";
+    position:absolute;
+    bottom:0px;
+    left:0%;
+    transform:translateX(-100%);
+    width:100%;
+    background-color:var(--red-primary);
+    height:4px;
+}
+
+div.media-intro-bar>div:last-child>div span[select="1"][load="1"]::after{
+    animation:loading-line 1s ease-in infinite;
+}
+
+@keyframes loading-line{
+    from{
+        transform:translateX(-100%);
+    }
+    to{
+        transform:translateX(100%);
+    }
 }
 
 div.media-intro-bar>div:last-child>div span:first-child{
@@ -146,6 +180,7 @@ div.media-intro-bar>div:last-child>div span[select="1"]{
     color:white;
     text-align:center;
 }
+
 
 @media only screen and (max-width:1100px){
     div.media-intro-bar{
