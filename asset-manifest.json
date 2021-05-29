@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/panchatt_website/static/css/main.6b1cfcbe.chunk.css",
-    "main.js": "/panchatt_website/static/js/main.d5df4e60.chunk.js",
-    "main.js.map": "/panchatt_website/static/js/main.d5df4e60.chunk.js.map",
+    "main.css": "/panchatt_website/static/css/main.a8626aeb.chunk.css",
+    "main.js": "/panchatt_website/static/js/main.7d466f31.chunk.js",
+    "main.js.map": "/panchatt_website/static/js/main.7d466f31.chunk.js.map",
     "runtime-main.js": "/panchatt_website/static/js/runtime-main.79ca45d6.js",
     "runtime-main.js.map": "/panchatt_website/static/js/runtime-main.79ca45d6.js.map",
     "static/js/2.11a0f207.chunk.js": "/panchatt_website/static/js/2.11a0f207.chunk.js",
@@ -10,11 +10,14 @@
     "static/js/3.502062b8.chunk.js": "/panchatt_website/static/js/3.502062b8.chunk.js",
     "static/js/3.502062b8.chunk.js.map": "/panchatt_website/static/js/3.502062b8.chunk.js.map",
     "index.html": "/panchatt_website/index.html",
-    "static/css/main.6b1cfcbe.chunk.css.map": "/panchatt_website/static/css/main.6b1cfcbe.chunk.css.map",
+    "static/css/main.a8626aeb.chunk.css.map": "/panchatt_website/static/css/main.a8626aeb.chunk.css.map",
     "static/js/2.11a0f207.chunk.js.LICENSE.txt": "/panchatt_website/static/js/2.11a0f207.chunk.js.LICENSE.txt",
-    "static/media/MediaBar.css": "/panchatt_website/static/media/radio.12894603.jpg",
+    "static/media/MediaBar.css": "/panchatt_website/static/media/twitter.2fd187f4.svg",
+    "static/media/about_us_box.f66aaf2c.svg": "/panchatt_website/static/media/about_us_box.f66aaf2c.svg",
+    "static/media/about_us_desii.6d8b5d00.svg": "/panchatt_website/static/media/about_us_desii.6d8b5d00.svg",
+    "static/media/about_us_first.d284e9f2.svg": "/panchatt_website/static/media/about_us_first.d284e9f2.svg",
+    "static/media/about_us_last.c48b6d79.svg": "/panchatt_website/static/media/about_us_last.c48b6d79.svg",
     "static/media/BlogDisplay.css": "/panchatt_website/static/media/pinterest.be8d60fb.svg",
-    "static/media/App.css": "/panchatt_website/static/media/bg.1349a975.svg",
     "static/media/blogs.ad62f4ce.svg": "/panchatt_website/static/media/blogs.ad62f4ce.svg",
     "static/media/TrainAssembly.css": "/panchatt_website/static/media/steam_engine.13590888.svg",
     "static/media/NavBar.css": "/panchatt_website/static/media/navline.1e33ed13.svg",
@@ -25,7 +28,7 @@
   "entrypoints": [
     "static/js/runtime-main.79ca45d6.js",
     "static/js/2.11a0f207.chunk.js",
-    "static/css/main.6b1cfcbe.chunk.css",
-    "static/js/main.d5df4e60.chunk.js"
+    "static/css/main.a8626aeb.chunk.css",
+    "static/js/main.7d466f31.chunk.js"
   ]
 }
