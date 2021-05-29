@@ -5,6 +5,9 @@ import {generatePlaylist_List , getPlayListItems} from '../utlities/constants';
 import {CurrentMediaWindow, CurrentPlayingVideoContext, CurrentSectionLoadingIndex, VideoAllLoadedContext} from '../utlities/Contexts';
 import { IconHeading , InputWithButton, SubHeading } from './misc';
 
+//set the max videos that are there on a single page.
+const MAX_VIDEOS_PER_PAGE = 5;
+
 let VideoCarouselContext = React.createContext({
     playlistId:'',
     nextPageToken:''
@@ -55,14 +58,18 @@ function RightVideoGrid(){
     },[current_playlist_id])
 
     async function updatePlaylist(){
+        if(max_loaded){
+            return;
+        }
 
         //initialise loading process
         set_is_loading('1');
 
         //reached maximum bottom --> make a new api request to get
         //the next page of videos
+        console.log(current_playlist.id);
         let new_videos = await getPlayListItems(
-            current_playlist && current_playlist.id , 
+            current_playlist_id, 
             current_playlist.nextPageToken 
         );
 
@@ -79,7 +86,7 @@ function RightVideoGrid(){
 
         })
 
-        if(new_videos_array.length === 0){
+        if(new_videos_array.length < MAX_VIDEOS_PER_PAGE){
             //maximum data has been loaded
             set_max_loaded(1);
         }
@@ -87,7 +94,8 @@ function RightVideoGrid(){
         //append new videos and the nextPageToken to the current playlist
         set_current_playlist({
             videos : [...current_playlist.videos , ...new_videos_array],
-            nextPageToken : new_videos && new_videos.nextPageToken || ''
+            nextPageToken : new_videos && new_videos.nextPageToken || '',
+            id:current_playlist_id
         });
 
         //once loading process is fulfilled 

@@ -12,12 +12,14 @@
 
 :root{
   /* --font-main : 'Quicksand', sans-serif; */
-  --font-main:'Nunito', sans-serif;
+  --font-main:'Quicksand', sans-serif;
+  --font-about-us: 'Nunito', sans-serif;
   --font-train : 'Milletun', sans-serif;
   --font-clock : 'Orbitron', sans-serif;
   --font-para : 'Arvo', sans-serif;
   --font-secondary : 'Open Sans', sans-serif;
   --red-primary : #DA0000;
+  --dark-red:#480000;
 }
 
 
@@ -27,7 +29,5 @@
 body{
   margin:0px;
   padding:0px;
-  background-image:url('./image/sample_images/bg.svg');
-  background-size:contain;
 }
 

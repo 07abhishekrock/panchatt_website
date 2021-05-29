@@ -55,16 +55,114 @@ div.media-intro-bar{
     overflow:hidden;
     flex-flow:column;
 }
+
+/* styling the about us section */
 div.media-intro-bar>div:first-child{
-    display:grid;
-    grid-template-columns:60% 40%;
+    width:100%;
 }
+div.media-intro-bar div.about-us-section{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:1.5em;
+    background-size:contain;
+    background-position:center;
+    background-image:url('../image/icons/bg_vector.svg');
+    background-repeat:no-repeat;
+    width:calc(100% + 2em);
+    position:relative;
+    left:-1em;
+    padding:1em;
+    box-sizing: border-box;
+    position:relative;
+}
+
+
+div.media-intro-bar div.about-us-section>div.left-section{
+    width:50%;
+}
+div.media-intro-bar div.about-us-section>div.left-section>p{
+    width:80%;
+    letter-spacing:0.02em;
+    overflow:hidden;
+    font-size:1em;
+    height:6em;
+    line-height:1.4em;
+}
+
+div.media-intro-bar div.about-us-section>div.left-section>p>div.social-links{
+    display:flex;
+    margin-top:0.7em;
+}
+
+div.media-intro-bar div.about-us-section>div.left-section>p>div.social-links>a{
+    width:1em;
+    height:1em;
+    background-size:contain;
+    background-position:center;
+    margin-right:0.5em;
+    display:inline-block;
+}
+div.media-intro-bar div.about-us-section>div.left-section>p>div.social-links>a{
+    background-image:url('../image/icons/instagram_outline.svg');
+}
+div.media-intro-bar div.about-us-section>div.left-section>p>div.social-links>a:nth-child(2){
+    background-image:url('../image/icons/Vector.svg');
+}
+
+div.media-intro-bar div.about-us-section>div.left-section>p>div.social-links>a:last-child{
+    background-image:url('../image/icons/twitter.svg');
+}
+
+
+div.media-intro-bar div.about-us-section>div.left-section>h2{
+    font-family:var(--font-para);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    font-size:1.3em;
+}
+div.media-intro-bar div.about-us-section>div.left-section>div.dot-selection{
+    display:flex;
+}
+div.media-intro-bar div.about-us-section>div.left-section>div.dot-selection>span{
+    width:0.6em;
+    height:0.6em;
+    border-radius:50%;
+    background-color:#c4c4c4;
+    display:inline-block;
+    cursor:pointer;
+    margin-right:0.5em;
+}
+div.media-intro-bar div.about-us-section>div.left-section>div.dot-selection>span.selected{
+    background-color:var(--red-primary);
+}
+
+div.media-intro-bar div.about-us-section>div.right-section{
+    width:35%;
+    position:relative;
+    height:450px;
+    align-self:center;
+}
+div.media-intro-bar div.about-us-section>div.right-section>div.inner-image{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50% , -50%);
+    width:100%;
+    height:100%;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center right;
+}
+
+
+
+
 div.media-intro-bar p{
     grid-column:1 / 2;
-    font-family: var(--font-main);
+    font-family: var(--font-about-us);
     grid-row:1;
     font-weight:550;
-    line-height:1em;
+    line-height:1.1em;
     font-size:0.9em;
     align-self:center;
     letter-spacing:0.02em;
@@ -74,16 +172,109 @@ div.media-intro-bar p>b{
     font-size:1.2em;
     color:var(--red-primary);
 }
-div.media-intro-bar div.panchatt-icon{
-    grid-column: 2 / 3;
-    background-size:contain;
-    height:80%;
-    align-self:center;
-    background-position:center;
-    background-image:url('../image/icons/pedestal.svg');
-    background-repeat:no-repeat;
+
+@media screen and (max-width:1312px){
+
+    div.media-intro-bar div.about-us-section>div.left-section>p{
+        font-size:0.8em;
+    }
+    div.media-intro-bar div.about-us-section>div.right-section{
+        height:370px;
+        z-index:-1
+    }
 }
 
+@media screen and (max-width:1039px){
+
+    div.media-intro-bar div.about-us-section{
+        background-position:center left;
+    }
+    div.media-intro-bar div.about-us-section>div.right-section{
+        height:320px;
+        background-position:center right;
+    }
+
+}
+
+@media screen and (max-width:824px){
+
+    div.media-intro-bar div.about-us-section>div.left-section>h2{
+        margin-bottom:0.3em;
+    }
+
+    div.media-intro-bar div.about-us-section{
+        display:block;
+        background-image:none;
+    }
+    div.media-intro-bar div.about-us-section>div.right-section{
+        position:absolute;
+        top:30px;
+        right:30px;
+        border-radius:100%  0px 0px 100%;
+    }
+    div.media-intro-bar div.about-us-section>div.right-section::after{
+        height:280px;
+    }
+
+    div.media-intro-bar div.about-us-section>div.left-section{
+        width:70%;
+    }
+}
+
+@media screen and (max-width:780px){
+
+    div.media-intro-bar div.about-us-section>div.right-section{
+        border:0px;
+    }
+
+}
+
+@media screen and (max-width:626px){
+
+    div.media-intro-bar div.about-us-section{
+        display:flex;
+        flex-flow:column-reverse;
+    }
+
+    div.media-intro-bar div.about-us-section>div.right-section{
+        height:5.5em;
+        width:5.5em;
+        border:2px solid black;
+        border-radius:50%;
+        position:relative;
+        top:0px;
+        left:0px;
+    }
+
+    div.media-intro-bar div.about-us-section>div.right-section>div.inner-image{
+        height:4em;
+        width:4em;
+        background-position:center center;
+    }
+
+    div.media-intro-bar div.about-us-section>div.left-section{
+        width:100%;
+    }
+    div.media-intro-bar div.about-us-section>div.left-section>div.dot-selection{
+        justify-content: center;
+    }
+    div.media-intro-bar div.about-us-section>div.left-section>p{
+        text-align:center;
+        width:70%;
+        margin:1.5em auto;
+        height:auto;
+    }
+    div.media-intro-bar div.about-us-section>div.left-section>h2{
+        text-align:center;
+    }
+    div.media-intro-bar div.about-us-section>div.left-section>p>div.social-links{
+        display:flex;
+        margin:1.5em 0px;
+        margin-bottom:0px;
+        justify-content: center;
+    }
+
+}
 
 .fixed-class{
     position:fixed;
@@ -181,6 +372,77 @@ div.media-intro-bar>div:last-child>div span[select="1"]{
     text-align:center;
 }
 
+
+div.media-intro-bar>div.media-title{
+    font-family:var(--font-para);
+    margin-bottom:0px;
+    margin-top:1em;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+div.media-intro-bar>div.media-title>h2{
+    display:flex;
+    align-items:center;
+}
+
+div.media-intro-bar>div.media-title>h2>i{
+    width:0.5em;
+    height:0.5em;
+    display:inline-block;
+    border-radius:50%;
+    background-color:#292929;
+    margin:0px 0.5em;
+}
+
+
+div.media-intro-bar>div.media-title>span{
+    width:3em;
+    height:3em;
+    background-size:contain;
+    background-position:center;
+    background-repeat:no-repeat;
+    display:inline-block;
+    margin:0px;
+}
+
+div.media-intro-bar>div.media-title>span:first-child{
+    background-image:url('../image/icons/cricket-player-with-bat.svg');
+}
+div.media-intro-bar>div.media-title>span:last-child{
+    background-image:url('../image/icons/director-chair.svg');
+}
+@media only screen and (max-width:660px){
+    div.media-intro-bar>div.media-title>span{
+        width:2.5em;
+        height:2.5em;
+        flex-shrink:0;
+    }
+}
+@media only screen and (max-width:522px){
+    div.media-intro-bar>div.media-title>span{
+        width:2em;
+        height:2em;
+    }
+    div.media-intro-bar>div.media-title>h2{
+        font-size:1.4em;
+    }
+}
+
+@media only screen and (max-width:471px){
+    div.media-intro-bar>div.media-title>h2>i{
+        display:none;
+    }
+    div.media-intro-bar>div.media-title>h2{
+        margin:0px 0.5em;
+    }
+}
+
+@media only screen and (max-width:400px){
+    div.media-intro-bar>div.media-title{
+        display:none;
+    }
+}
 
 @media only screen and (max-width:1100px){
     div.media-intro-bar{
@@ -797,13 +1059,6 @@ div.main-video-box>div.desc-collapsible>p>span{
     }
     div.media-intro-bar{
         position:relative;
-    }
-    div.media-intro-bar>div:nth-child(1) p{
-        text-align:center;
-    }
-    div.media-intro-bar>div:nth-child(1){
-        position:relative;
-        display:inline-block;
     }
     div.media-intro-bar>div:last-child{
         position:relative;

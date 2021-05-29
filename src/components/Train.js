@@ -75,17 +75,23 @@ function TrainAssembly(props){
     // },[mins, hrs])
 
     return(
-        <div className="train-assembly-wrapper">
-            <div className="train-assembly">
-                <div className="platform-clock">
-                    <p>{String(hrs).length > 1 ? hrs : `0${hrs}`}:{String(mins).length > 1 ? mins : `0${mins}`}</p>
-                </div>
-                <div className="platform-back">
-                </div>
-                <Train/>
-                <div className="platform-front"></div>
+        <React.Fragment>
+            <div className="ticket-wrapper">
+                <p>Thought goes here and it can be only this long not longer than this.</p>
             </div>
-        </div>
+            <div className="train-assembly-wrapper">
+                <div className="train-assembly">
+                    <div className="platform-clock">
+                        <p>{String(hrs).length > 1 ? hrs : `0${hrs}`}:{String(mins).length > 1 ? mins : `0${mins}`}</p>
+                    </div>
+                    <div className="platform-back">
+                    </div>
+                    <Train/>
+                    <div className="platform-front"></div>
+                    <div className="platform-light"></div>
+                </div>
+            </div>
+        </React.Fragment>
     );
 }
 

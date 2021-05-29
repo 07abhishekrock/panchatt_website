@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
 import TrainAssembly from './components/Train';
 import {MediaIntroBar, MediaContainer} from './components/MediaBar';
 import {CurrentMediaWindow,ResizeStackContext,CurrentSectionLoadingIndex} from './utlities/Contexts';
+import FooterContainer from './components/FooterContainer';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <TrainAssembly/>
           <MediaIntroBar/>
           <MediaContainer/>
+          <FooterContainer/>
         </CurrentSectionLoadingIndex.Provider>
       </CurrentMediaWindow.Provider>
     </ResizeStackContext.Provider>

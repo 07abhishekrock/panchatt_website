@@ -245,7 +245,7 @@ div.blog-bottom-btn>div:last-child>h3:hover::after{
     transform:translateX(20px) rotateZ(180deg);
 }
 div.blog-bottom-btn>div:last-child>h3::after{
-    left:80%;
+    left:75%;
     transform:rotateZ(180deg);
 }
 

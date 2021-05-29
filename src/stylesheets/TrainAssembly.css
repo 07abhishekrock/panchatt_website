@@ -15,6 +15,35 @@ div.train-assembly-wrapper{
     overflow:hidden;
 }
 
+div.train-assembly>div.platform-light{
+    width:200px;
+    height:950px;
+    background-size:contain;
+    background-position:center;
+    background-repeat: no-repeat;
+    background-image:url('../image/icons/light_post_new.svg');
+    position:absolute;
+    top:0px;
+    /* comment the below line if you want to see the light post */
+    display:None;
+    right:380px;
+}
+@media only screen and (max-width:1430px){
+    div.train-assembly>div.platform-light{
+        right:450px;
+    }
+}
+@media only screen and (max-width:1363px){
+    div.train-assembly>div.platform-light{
+        right:580px;
+    }
+}
+@media only screen and (max-width:1180px){
+    div.train-assembly>div.platform-light{
+        display:none;
+    }
+}
+
 div.train-assembly>div.platform-clock{
     position:absolute;
     left:100vw;
@@ -108,7 +137,7 @@ div.train-assembly>div.train{
 }
 
 div.train>div.engine{
-    width:1223px;
+    width:var(--engine-width);
     height:400px;
     position:relative;
     /* top:10px; */
@@ -227,5 +256,40 @@ div.train[stage="5"]{
 @media screen and (max-width:950px){
     div.train-assembly-wrapper{
         display:none;
+    }
+}
+
+
+
+div.ticket-wrapper{
+    width:100%;
+    height:calc(100vw * calc(233 / 414));
+    background-color:white;
+    position:relative;
+    background-size:contain;
+    background-position:center;
+    margin-top:4em;
+    background-image:url('../image/icons/ticket_frame_large.svg');
+    display:None;
+}
+
+
+div.ticket-wrapper>p{
+    position:absolute;
+    display:none;
+}
+
+@media only screen and (max-width:950px){
+    div.ticket-wrapper{
+        display:block;
+    }
+}
+
+@media only screen and (max-width:920px){
+    div.ticket-wrapper{
+        margin-top:0px;
+    }
+    nav{
+        margin-bottom:0px;
     }
 }
