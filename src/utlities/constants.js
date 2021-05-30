@@ -5,6 +5,8 @@ const GET_PLAYLIST_URL =`https://youtube.googleapis.com/youtube/v3/playlists?par
 const GET_PLAYLIST_ITEMS_URL = `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&key=${YOUTUBE_API_KEY}&maxResults=5`;
 const GET_VIDEO_DATA_URL = `https://www.googleapis.com/youtube/v3/videos?part=snippet&key=${YOUTUBE_API_KEY}`;  
 
+const NATIVE_DOMAIN = 'http://localhost:3000';
+
 
 
 async function getAllPlaylists(){
@@ -77,17 +79,54 @@ async function generatePlaylist_List(){
     }
 }
 
-async function generateVideoItemsWithIdAndPageToken(id, pageToken){
+async function LoadAllCategories(){
+    try{
+        let allCategories_response = await axios.get(NATIVE_DOMAIN + '/api/categoryList');
+        alert(allCategories_response);
+        let allCategories_data = allCategories_response.data;
+        if(allCategories_data.data && allCategories_data.data.length > 0){
+            return allCategories_data.data.map((element)=>{
+                return element.categoryName
+            })
+        }
+    }
+    catch(e){
+        alert(e);
+        console.log(e);
+    }
+}
+
+async function getBlogsByCategory(category_string , pageValue = 0){
+    try{
+        let blogs_array_response = await axios.get(NATIVE_DOMAIN + '/api/FindBlogByCategory/' + category_string + '?page=' + pageValue);
+        let blogs_array_data = blogs_array_response.data;
+        let final_blogs_data = {};
+        if(blogs_array_data.data && blogs_array_data.data.length > 0){
+            final_blogs_data.blogs_array = blogs_array_data.data.map((element)=>{
+                return {
+                    date_created : (new Date(element.date)).toDateString().split(' ').slice(1).join(' '),
+                    glance_content : element.title,
+                    editor_name : 'Panchatt',
+                    time_reading : element.readingtime,
+                    tag:category_string,
+                    url:element.coverphoto
+                }
+            })
+        }
+        console.log(final_blogs_data.blogs_array);
+        final_blogs_data.pageValue = pageValue + 1;
+        return final_blogs_data;
+    }
+    catch(e){
+        console.log(e);
+    }
 }
 
 
-async function generateVideoElementsForId(videos_id_array){
-    
-}
 
 
 export  {
-   generatePlaylist_List, getPlayListItems
+   generatePlaylist_List, getPlayListItems , LoadAllCategories, getBlogsByCategory
 }
 
 

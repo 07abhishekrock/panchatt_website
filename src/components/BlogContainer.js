@@ -4,6 +4,7 @@ import axios from 'axios';
 import { IconHeading , InputWithButton, SubHeading } from './misc';
 import blogs_icon from '../image/icons/blogs.svg';
 import { CurrentMediaWindow } from '../utlities/Contexts';
+import { LoadAllCategories , getBlogsByCategory } from '../utlities/constants';
 
 function SimpleBlogItem(props){
     return(
@@ -144,19 +145,19 @@ function BlogDisplay(props){
 }
 
 function BlogUnit(props){
-    let category_ref = useRef(null);
-    useEffect(()=>{
-        category_ref.current.innerHTML = tags[props.tag];
-    },[])
-    let tags =  ['Entertain<i>Ment</i>']
     return(<div className="blog-unit">
         <img src={props.url}/>
         <div>
-            <span ref={category_ref}></span>
+            {/* <span>
+                    <i>
+                        {props.tag.slice(0 , Math.floor(props.tag.length / 2)).toUpperCase()}
+                    </i>
+                        {props.tag.slice(Math.floor(props.tag.length / 2)).toUpperCase()}
+            </span> */}
             <div className="inline-info">
                 <span>{props.editor_name}</span>
                 <span>{props.date_created}</span>
-                <span>{props.time_reading}</span>
+                <span>{props.time_reading > 1 ? props.time_reading + ' Mins' : props.time_reading + ' Min'}</span>
             </div>
             <p>{props.glance_content}</p>
             <button>Read More</button>
@@ -165,76 +166,27 @@ function BlogUnit(props){
 }
 
 function BlogGridUnit(props){
-    let [blogs_list , set_blogs_list] = useState([
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            url:bg,
-            tag : 0
-        },
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            tag : 0,
-            url:bg,
-        },
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            url:bg,
-            tag : 0
-        },
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            url:bg,
-            tag : 0
-        },
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            url:bg,
-            tag : 0
-        },
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            url:bg,
-            tag : 0
-        },
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            url:bg,
-            tag : 0
-        },
-    ]);
-    useEffect(()=>{
-        axios.get('https://kem-palty-admin-panel.herokuapp.com/api/blog').then((data)=>{
-                console.log(data.data);
+    let [blogs_list , set_blogs_list] = useState([]);
+
+    function CapitaliseFirstLetter(string){
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    function HighlightOdd(string){
+        return `${string.split(' ').map((element, index)=>{
+            if(index % 2 !== 0){
+                return `<i>${element}</i>` 
             }
-        );
-    })
+            return element
+        }).join(' ')}`
+    }
+    
     return(
     <div className="blogs-grid-wrapper">
-        <SubHeading text={"Blogs <i>2021</i>"}/>
+        <SubHeading text={HighlightOdd(CapitaliseFirstLetter((props.blogs[0].tag || '') + ' Blogs'))}/>
         <div className="blogs-grid">
-            {blogs_list.map((element, index)=>{
-            return <BlogUnit {...element} key={index}/>
+            {props.blogs.map((element, index)=>{
+                return <BlogUnit {...element} key={index}/>
             })}
         </div>
     </div>
@@ -244,6 +196,8 @@ function BlogGridUnit(props){
 function BlogsContainer(props){
 
     let window_index = useContext(CurrentMediaWindow)[0];
+    
+    let [blogs_categories_data , set_blogs_categories_data] = useState([]);
 
     let element = {
         date_created : '30 Apr 2020',
@@ -253,6 +207,20 @@ function BlogsContainer(props){
         url:bg,
         tag : 0
     }
+    useEffect(async ()=>{
+        let allCategories = await LoadAllCategories();
+        //make request for each category while pushing obtained ones on the page in parallel
+
+        if(allCategories){
+            for(let category of allCategories){
+                let blogs_data = await getBlogsByCategory(category);
+                if(blogs_data.blogs_array){
+                    set_blogs_categories_data([...blogs_categories_data , {blogs : blogs_data.blogs_array , pageValue : blogs_data.pageValue}]);
+                }
+            }
+        }
+
+    },[])
 
     return(
         <li className="blogs" style={{
@@ -261,7 +229,11 @@ function BlogsContainer(props){
         >
             <IconHeading icon_url={blogs_icon} visible_toggle={0} text={"Blogs And Reviews"} input_present="1" right_text={"Subscribe to our monthly Newsletter to Receive Updates On Blogs"}/>
             <BlogDisplay {...element}/>
-            <BlogGridUnit/>
+            {
+                blogs_categories_data.map((element, index)=>{
+                    return <BlogGridUnit key={index} {...element}/>
+                })
+            }
         </li>
     );
 }
