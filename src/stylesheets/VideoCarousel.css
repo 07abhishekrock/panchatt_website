@@ -126,7 +126,7 @@ div.video-wrapper-wrapper>button.right{
 
 div.right-video-grid div.video-element{
     border-bottom:2px solid lightgray;
-    padding-bottom:0.5em;
+    padding-bottom:10px;
 }
 
 div.loader{

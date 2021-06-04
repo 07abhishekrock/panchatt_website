@@ -2,7 +2,7 @@ import React , {useRef , useEffect, useState, useContext} from 'react';
 import youtube_icon from '../image/icons/youtube.svg';
 import SwiperMyVersion from '../utlities/swiper_my_version';
 import {generatePlaylist_List , getPlayListItems} from '../utlities/constants';
-import {CurrentMediaWindow, CurrentPlayingVideoContext, CurrentSectionLoadingIndex, VideoAllLoadedContext} from '../utlities/Contexts';
+import {CurrentMediaWindow, CurrentPlayingVideoContext, VideoLoadingIndex, VideoAllLoadedContext} from '../utlities/Contexts';
 import { IconHeading , InputWithButton, SubHeading } from './misc';
 
 //set the max videos that are there on a single page.
@@ -45,6 +45,10 @@ function RightVideoGrid(){
     //current playlist state variable , with a dummy videos attribute and nextPageToken.
     let [current_playlist, set_current_playlist] = useState({videos:[] , nextPageToken:''});
 
+
+    let current_video = useContext(CurrentPlayingVideoContext).current_video;
+
+
     useEffect(()=>{
 
         //get the current playlist and store it in a local state variable.
@@ -58,6 +62,7 @@ function RightVideoGrid(){
     },[current_playlist_id])
 
     async function updatePlaylist(){
+
         if(max_loaded){
             return;
         }
@@ -67,7 +72,6 @@ function RightVideoGrid(){
 
         //reached maximum bottom --> make a new api request to get
         //the next page of videos
-        console.log(current_playlist.id);
         let new_videos = await getPlayListItems(
             current_playlist_id, 
             current_playlist.nextPageToken 
@@ -111,8 +115,9 @@ function RightVideoGrid(){
                     return;
                 }
                 if(window.innerWidth > 830){
-                    if(Math.ceil(e.target.scrollTop + e.target.offsetHeight) === e.target.scrollHeight){
+                    if(Math.ceil(e.target.scrollTop + e.target.offsetHeight) >= e.target.scrollHeight){
 
+                        console.log('detected');
                         await updatePlaylist() 
                     }
  
@@ -120,6 +125,7 @@ function RightVideoGrid(){
                 else{
                     if(Math.ceil(e.target.scrollLeft + e.target.offsetWidth) >= e.target.scrollWidth){
 
+                        console.log('detected');
                         await updatePlaylist();
 
                     } 
@@ -133,7 +139,7 @@ function RightVideoGrid(){
                 //render video elements to display on the right video grid
                 current_playlist.videos.map((video , video_index)=>{
 
-                    return <VideoElement key={video.videoId} {...video} index={video_index}/>
+                    return <VideoElement special={Number(video_index === current_video.index)} key={video.videoId} {...video} index={video_index}/>
 
                 })
             }
@@ -176,6 +182,11 @@ function VideoCarousel(props){
         let new_swiper_object = new SwiperMyVersion('video-wrapper','video-parent','btn-left','btn-right',360,props.index);
         new_swiper_object.init();
     },[])
+
+    
+
+
+
     return(
         <div className="video-wrapper-wrapper">
 
@@ -188,11 +199,14 @@ function VideoCarousel(props){
             }).join(' ')}/>
 
 
+
             <div className="video-wrapper">
                 <div className="video-parent" ref={parent}>
                     {props.children}
                     <div className="load-more-button">
-                        <span>View All Videos</span>
+                        <span onClick={()=>{
+                            parent.current.children[0].click();
+                        }}>View All Videos</span>
                     </div>
                 </div>
             </div>
@@ -222,14 +236,15 @@ function VideoElement(props){
     let set_current_playlist_id = useContext(CurrentPlayingVideoContext).set_current_playlist_id;
     let set_next_page_token = useContext(CurrentPlayingVideoContext).set_next_page_token;
     let set_current_video = useContext(CurrentPlayingVideoContext).set_current_video;
-    
+    let current_video = useContext(CurrentPlayingVideoContext).current_video;
+
     //self values
     let self_playlist_id = useContext(VideoCarouselContext).playlistId;
     let self_page_token = useContext(VideoCarouselContext).nextPageToken;
 
     return(
-        <div className="video-element" special={props.special || 0}
-            onClick={()=>{
+        <div className="video-element" special={Number(props.index === current_video.index)}
+            onClick={(e)=>{
                 //set next page token and playlist id for the global context
                 if(current_playlist_id !== self_playlist_id){
                     set_current_playlist_id(self_playlist_id);
@@ -239,12 +254,24 @@ function VideoElement(props){
                     videoId:props.videoId,
                     description:props.description,
                     date:props.date,
-                    title:props.title
+                    title:props.title,
+                    index:props.index
                 });
 
                 //scrolling to the main video box to get the video in the focus.
-                let main_video_box = document.querySelector('div.main-video-grid');
+                let main_video_box = document.querySelector('div.main-video-box');
                 main_video_box.scrollIntoView(0);
+
+
+                let right_video_scroll = document.querySelector('div.right-video-scroll');
+                if(window.innerWidth < 830){
+                    right_video_scroll.scrollLeft = 0;
+                    right_video_scroll.scrollBy(props.index * 240 , 0);
+                }
+                else{
+                    right_video_scroll.scrollTop = 0;
+                    right_video_scroll.scrollBy(0 , props.index * 280);
+                }
         }}>
 
             <img className="thumbnail" src={props.thumbnail}></img>
@@ -261,7 +288,7 @@ function VideoContainer(props){
     //edit context here
     let [video_array, set_video_array] = useState([]);
     //loading index
-    let set_load_index = useContext(CurrentSectionLoadingIndex)[1]; 
+    let set_load_index = useContext(VideoLoadingIndex)[1]; 
     useEffect( async()=>{
         
         /* 
@@ -337,20 +364,21 @@ function VideoContainer(props){
                     return(
                         //
                         <VideoCarousel index={index} key={playlist.id} title={playlist.playlist_title} >
-
-                            {/* Video Carousel Context defines the playlist id and page token for a current set of videos */}
                             <VideoCarouselContext.Provider 
                                 value={{
                                     nextPageToken : playlist.nextPageToken || '' , 
                                     playlistId : playlist.id || ''
                             }}>
 
-                                {playlist.videos.map((video,sub_index)=>{
-                                    return <VideoElement key={video.videoId} index={sub_index} {...video}/>
-                                })}
+                                {/* Video Carousel Context defines the playlist id and page token for a current set of videos */}
+                                
+
+                                    {playlist.videos.map((video,sub_index)=>{
+                                        return <VideoElement key={video.videoId} index={sub_index} {...video}/>
+                                    })}
+
 
                             </VideoCarouselContext.Provider>
-
                         </VideoCarousel>
                     )
                 })} 

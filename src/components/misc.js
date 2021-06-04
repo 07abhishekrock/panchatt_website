@@ -1,4 +1,6 @@
 import {useRef , useEffect} from 'react';
+import {StoreNewSubscriber} from '../utlities/constants';
+
 function IconHeading(props){
     return(
         <div className="icon-grid">
@@ -15,11 +17,30 @@ function IconHeading(props){
 }
 
 function InputWithButton(props){
+    let form = useRef(null);
+    let email_input = useRef(null);
     return(
-        <div className="input-with-button">
-            <input type="text" placeholder={props.placeholder}/>
-            <button>{props.button_text}</button>
-        </div>
+        <form ref={form}>
+            <div className="input-with-button">
+                <input type="email" ref={email_input}  placeholder={props.placeholder}/>
+                <button  onClick={async (e)=>{
+                    e.preventDefault();
+                    try{
+                        if(form.current.checkValidity())
+                        {
+                            await StoreNewSubscriber(email_input.current.value);
+                            window.alert('You are successfully registered');
+                        }
+                        else{
+                            window.alert("please enter a valid email");
+                        }
+                    }
+                    catch(e){
+                        window.alert(e);
+                    }
+                }}>{props.button_text}</button>
+            </div>
+        </form>
     )
 }
 

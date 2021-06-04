@@ -113,6 +113,9 @@ div.blog-display>div.blog-content{
     position:relative;
     padding-top:2em;
 }
+div.blog-display>div.blog-content>img.image-unit{
+    width:100%;
+}
 div.blog-display>div.blog-content>div.text-unit{
     padding:1em 3em;
     background-size:contain;
@@ -128,6 +131,16 @@ div.text-unit>p{
     max-width:calc(100% - 500px);
     font-size:1.2em;
     font-family:var(--font-para), sans-serif;
+}
+
+div.text-unit>p>img{
+    margin: 2em auto;
+    display:block;
+}
+
+div.text-unit>img{
+    width:calc(100% - 300px - 5em);
+    border-radius:0.2em;
 }
 
 div.blog-content>div.navigation-block{
@@ -297,6 +310,12 @@ div.blog-bottom-btn>div:last-child>h3::after{
         font-size:0.9em;
         width:300px;
     }
+
+
+    div.text-unit>img{
+        width:100%;
+    }
+
 }
 
 

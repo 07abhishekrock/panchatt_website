@@ -532,12 +532,12 @@ div.icon-grid>div.right>p{
     font-weight:600;
     font-size:1.4em;
 }
-div.icon-grid>div.right>div:last-child{
+div.icon-grid>div.right div:last-child{
     width:100%;
     display:flex;
 }
 
-div.icon-grid>div.right>div:last-child>input{
+div.icon-grid>div.right div:last-child>input{
     padding:1em 0.5em;
     font-size:1.1em;
     flex-basis:420px;
@@ -547,7 +547,7 @@ div.icon-grid>div.right>div:last-child>input{
     font-family:var(--font-main);
 }
 
-div.icon-grid>div.right>div:last-child>button{
+div.icon-grid>div.right div:last-child>button{
     padding:1em 0.5em;
     flex-basis:150px;
     font-family:var(--font-main);
@@ -628,7 +628,12 @@ div.blogs-grid>div.blog-unit{
     border-right:8px solid white;
     box-shadow:2px 2px 4px rgba(0,0,0,0.3);
     box-sizing: border-box;
+    cursor:pointer;
+    transition:transform 0.2s ease-in;
 }
+
+
+
 div.blogs-grid>div.blog-unit i{
     color:var(--red-primary);
     font-style:normal;
@@ -642,6 +647,13 @@ div.blogs-grid>div.blog-unit>div{
     box-sizing:border-box;
     position:relative;
     background-color:#292929;
+}
+div.blogs-grid-wrapper>div.blogs-grid>div.blog-unit:hover{
+    transform:scale(1.02);
+}
+
+div.blogs-grid-wrapper>div.blogs-grid>div.blog-unit *{
+    pointer-events:None;
 }
 
 div.blogs-grid>div.blog-unit>div>div{
@@ -993,7 +1005,7 @@ div.main-video-box>div.desc-collapsible>p>span{
     div.right-video-grid div.video-element{
         width:200px;
         display:Inline-block;
-        margin-bottom:1em;
+        margin-bottom:16px;
         border-bottom:0px solid black!important;
     }
 
@@ -1176,7 +1188,11 @@ div.main-video-box>div.desc-collapsible>p>span{
         grid-template-columns:120px calc(100% - 120px);
         grid-template-rows:100%;
         background-color:#292929;
+        cursor: pointer;
     }
+
+    
+
     div.blogs-grid-wrapper>div.blogs-grid>div.blog-unit p{
         max-width:250px;
     }

@@ -8,7 +8,7 @@ import about_us_last from '../image/icons/about_us_first.svg';
 import about_us_desi from '../image/icons/about_us_desii.svg';
 import about_us_box from '../image/icons/about_us_box.svg';
 
-import {CurrentMediaWindow , CurrentSectionLoadingIndex} from '../utlities/Contexts';
+import {CurrentMediaWindow , VideoLoadingIndex , BlogLoadingIndex} from '../utlities/Contexts';
 import BlogsContainer  from './BlogContainer';
 import VideoContainer from './VideoContainer';
 
@@ -21,7 +21,8 @@ function MediaIntroBar(props){
     let [para_index , set_para_index] = useState(0);
     
     //the index of the currently loading section goes here
-    let load_index = useContext(CurrentSectionLoadingIndex)[0];
+    let video_load_index = useContext(VideoLoadingIndex)[0];
+    let blog_load_index = useContext(BlogLoadingIndex)[0];
 
 
     let para_main = useRef(null);
@@ -84,9 +85,9 @@ function MediaIntroBar(props){
                             {
                                 [para_index , para_index , para_index , para_index].map((_ , index)=>{
                                     if(index === para_index){
-                                        return <span className="selected" onClick={()=>set_para_index(index)}></span>
+                                        return <span key={index} className="selected" onClick={()=>set_para_index(index)}></span>
                                     }
-                                    return <span onClick={()=>set_para_index(index)}></span>
+                                    return <span key={index} onClick={()=>set_para_index(index)}></span>
                                 })
                             }
                         </div>
@@ -102,7 +103,7 @@ function MediaIntroBar(props){
             </div>
 
             {/* fancy media title */}
-            <div class="media-title">
+            <div className="media-title">
                 <span></span> {/*figure of a batsman*/}
                 <h2><i></i>MEDIA<i></i></h2>
                 <span></span> {/*figure of a director's chair*/}
@@ -114,13 +115,13 @@ function MediaIntroBar(props){
                 <div position = {Number(select_index)}>
                     <span 
                     select={select_index === 0 ? 1 : 0} 
-                    load={load_index === 0 ? 1 : 0}
+                    load={blog_load_index === 1 ? 1 : 0}
                     onClick={()=>{
                         set_select_index(0);
                     }}>Blogs</span>
                     <span 
                     select={select_index === 1 ? 1 : 0} 
-                    load={load_index === 1 ? 1 : 0}
+                    load={video_load_index === 1 ? 1 : 0}
                     onClick={()=>{
                         set_select_index(1);
                     }}>Videos</span>

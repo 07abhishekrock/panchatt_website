@@ -82,7 +82,6 @@ async function generatePlaylist_List(){
 async function LoadAllCategories(){
     try{
         let allCategories_response = await axios.get(NATIVE_DOMAIN + '/api/categoryList');
-        alert(allCategories_response);
         let allCategories_data = allCategories_response.data;
         if(allCategories_data.data && allCategories_data.data.length > 0){
             return allCategories_data.data.map((element)=>{
@@ -96,9 +95,10 @@ async function LoadAllCategories(){
     }
 }
 
-async function getBlogsByCategory(category_string , pageValue = 0){
+async function getBlogsByCategory(category_string , pageValue = 0 , limit = 6){
     try{
-        let blogs_array_response = await axios.get(NATIVE_DOMAIN + '/api/FindBlogByCategory/' + category_string + '?page=' + pageValue);
+        category_string = category_string.toLowerCase();
+        let blogs_array_response = await axios.get(NATIVE_DOMAIN + '/api/FindBlogByCategory/' + category_string + '?page=' + pageValue + '&limit=' + limit);
         let blogs_array_data = blogs_array_response.data;
         let final_blogs_data = {};
         if(blogs_array_data.data && blogs_array_data.data.length > 0){
@@ -109,11 +109,11 @@ async function getBlogsByCategory(category_string , pageValue = 0){
                     editor_name : 'Panchatt',
                     time_reading : element.readingtime,
                     tag:category_string,
-                    url:element.coverphoto
+                    url:element.coverphoto,
+                    id:element._id
                 }
             })
         }
-        console.log(final_blogs_data.blogs_array);
         final_blogs_data.pageValue = pageValue + 1;
         return final_blogs_data;
     }
@@ -122,11 +122,46 @@ async function getBlogsByCategory(category_string , pageValue = 0){
     }
 }
 
+async function getSingleBlog(blog_id){
+    try{
+        let single_blog_response = await axios.get(NATIVE_DOMAIN + '/api/blog/' + blog_id);
+        if(single_blog_response.data.single_blog){
+            let element = single_blog_response.data.single_blog;
+            return {
+                date_created : (new Date(element.date)).toDateString().split(' ').slice(1).join(' '),
+                glance_content : element.title,
+                editor_name : 'Panchatt',
+                time_reading : element.readingtime,
+                tag:element.category,
+                content:element.content,
+                url:element.coverphoto,
+                id:element._id
+            }
+        }
+    }
+    catch(e){
+        console.log(e);
+    }
+}
 
-
+async function StoreNewSubscriber(email){
+    try{
+        console.log(email);
+        await axios({
+            method:'POST',
+            url:NATIVE_DOMAIN + '/api/subscriber',
+            data:{
+                entered_email : email
+            }
+        });
+    }
+    catch(e){
+        console.log(e);
+    }
+}
 
 export  {
-   generatePlaylist_List, getPlayListItems , LoadAllCategories, getBlogsByCategory
+   generatePlaylist_List, getPlayListItems , LoadAllCategories, getBlogsByCategory , getSingleBlog, StoreNewSubscriber
 }
 
 

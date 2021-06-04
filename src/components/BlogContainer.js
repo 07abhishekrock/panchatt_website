@@ -1,108 +1,29 @@
 import {useRef , useEffect, useState, useContext} from 'react';
 import bg from '../image/sample_images/pranks_blog_background.jpg'
-import axios from 'axios';
-import { IconHeading , InputWithButton, SubHeading } from './misc';
+import { IconHeading , SubHeading } from './misc';
 import blogs_icon from '../image/icons/blogs.svg';
-import { CurrentMediaWindow } from '../utlities/Contexts';
-import { LoadAllCategories , getBlogsByCategory } from '../utlities/constants';
+import { CurrentMediaWindow , CurrentBlogContext ,BlogLoadingIndex} from '../utlities/Contexts';
+import { LoadAllCategories , getBlogsByCategory , getSingleBlog} from '../utlities/constants';
 
-function SimpleBlogItem(props){
-    return(
-        <div className="simple-blog-item">
-            <img src={props.url}/>
-            <span className="date">{props.date_created}</span>
-            <h3>{props.glance_content}</h3>
-            <span>{props.editor_name}</span>
-        </div>
-    )
-}
+
 
 function BlogDisplay(props){
-    let category_ref = useRef(null);
-    let [similar_blogs_list , set_similar_blogs_list] = useState([
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            url:bg,
-            tag : 0
-        },
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            tag : 0,
-            url:bg,
-        },
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            url:bg,
-            tag : 0
-        },
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            url:bg,
-            tag : 0
-        },
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            url:bg,
-            tag : 0
-        },
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            url:bg,
-            tag : 0
-        },
-        {
-            date_created : '30 Apr 2020',
-            glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
-            editor_name : 'Abhinav Shukla',
-            time_reading:'4min',
-            url:bg,
-            tag : 0
-        },
-    ]);
-    let [total_sidebar_blog_count, set_total_sidebar_blog_count] = useState(0);
-    useEffect(()=>{
-        category_ref.current.innerHTML = tags[props.tag];
-        let resize_event = new ResizeObserver((entries)=>{
-            if(entries[0].target.offsetWidth < 1100){
-                //size has reduced
-                return;
-            }
-            let height = parent.current.getBoundingClientRect().top + parent.current.offsetHeight - similar_blog_ref.current.getBoundingClientRect().top - 30;
-            similar_blog_ref.current.style.height = `${height}px`
-            similar_blog_ref.current.style.gridTemplateRows = `repeat(${total_sidebar_blog_count},400px)`;
-            set_total_sidebar_blog_count(Math.floor(height / 400));
-        });
-        resize_event.observe(parent.current);
-    },[])
-
-    let tags =  ['Entertain<i>Ment</i>'];
+    let current_blog_data = useContext(CurrentBlogContext)[0];
+    
     let parent = useRef(null);
-    let similar_blog_ref = useRef(null);
+
+    let blog_actual_content = useRef(null);
+    useEffect(()=>{
+        blog_actual_content.current.innerHTML = `<img src="${current_blog_data.url}"/>` + current_blog_data.content;
+    },[current_blog_data])
+
     return(
         <div className="blog-display" >
             <div className="title">
-                <span>{props.date_created}</span>
-                <h1>{props.glance_content}</h1>
-                <span className="editor">{props.editor_name}</span>
-                <span className="category" ref={category_ref}></span>
+                <span>{current_blog_data.date_created}</span>
+                <h1>{current_blog_data.glance_content}</h1>
+                <span className="editor">{current_blog_data.editor_name}</span>
+                <span className="category">{current_blog_data.tag}</span>
                 <div className="share-div">
                     <span className="facebook"></span>
                     <span className="instagram"></span>
@@ -119,13 +40,7 @@ function BlogDisplay(props){
                     <span>Second Heading</span>
                     <span>Third Heading</span>
                 </div>
-                <div className="similar-blogs" ref={similar_blog_ref}>
-                    {similar_blogs_list.map((element , index)=>{
-                        if(index < total_sidebar_blog_count){
-                            return <SimpleBlogItem {...element}/>
-                        }
-                    })}
-                </div>
+                <div className="text-unit" ref={blog_actual_content}></div>
             </div>
 
             <div className="blog-bottom-btn">
@@ -145,15 +60,24 @@ function BlogDisplay(props){
 }
 
 function BlogUnit(props){
-    return(<div className="blog-unit">
-        <img src={props.url}/>
+
+    let [current_blog_data , set_current_blog_data] = useContext(CurrentBlogContext);
+
+    return(<div className="blog-unit" onClick={async ()=>{
+        try{
+            let single_blog = await getSingleBlog(props.id);
+            if(single_blog){
+                set_current_blog_data(single_blog);
+                let blog_main_display = document.querySelector('li.blogs>div.icon-grid');
+                blog_main_display.scrollIntoView(-1);
+            }
+        }
+        catch(e){
+
+        }
+    }}>
+        <img style={{objectFit:'cover'}} src={props.url}/>
         <div>
-            {/* <span>
-                    <i>
-                        {props.tag.slice(0 , Math.floor(props.tag.length / 2)).toUpperCase()}
-                    </i>
-                        {props.tag.slice(Math.floor(props.tag.length / 2)).toUpperCase()}
-            </span> */}
             <div className="inline-info">
                 <span>{props.editor_name}</span>
                 <span>{props.date_created}</span>
@@ -185,8 +109,8 @@ function BlogGridUnit(props){
     <div className="blogs-grid-wrapper">
         <SubHeading text={HighlightOdd(CapitaliseFirstLetter((props.blogs[0].tag || '') + ' Blogs'))}/>
         <div className="blogs-grid">
-            {props.blogs.map((element, index)=>{
-                return <BlogUnit {...element} key={index}/>
+            {props.blogs.map((element)=>{
+                return <BlogUnit {...element} key={element.id}/>
             })}
         </div>
     </div>
@@ -196,8 +120,12 @@ function BlogGridUnit(props){
 function BlogsContainer(props){
 
     let window_index = useContext(CurrentMediaWindow)[0];
+
+    let set_load_index = useContext(BlogLoadingIndex)[1];
     
     let [blogs_categories_data , set_blogs_categories_data] = useState([]);
+
+    let [current_blog_data , set_current_blog_data] = useState({});
 
     let element = {
         date_created : '30 Apr 2020',
@@ -208,16 +136,31 @@ function BlogsContainer(props){
         tag : 0
     }
     useEffect(async ()=>{
-        let allCategories = await LoadAllCategories();
-        //make request for each category while pushing obtained ones on the page in parallel
+        try{
 
-        if(allCategories){
-            for(let category of allCategories){
-                let blogs_data = await getBlogsByCategory(category);
-                if(blogs_data.blogs_array){
-                    set_blogs_categories_data([...blogs_categories_data , {blogs : blogs_data.blogs_array , pageValue : blogs_data.pageValue}]);
+            set_load_index(1);
+
+            let allCategories = await LoadAllCategories();
+            //make request for each category while pushing obtained ones on the page in parallel
+
+            let initial_blogs_data = [];
+
+            if(allCategories){
+                for(let category of allCategories){
+                    let blogs_data = await getBlogsByCategory(category);
+                    if(blogs_data.blogs_array){
+                        initial_blogs_data.push({blogs : blogs_data.blogs_array , pageValue : blogs_data.pageValue})
+                    }
                 }
             }
+            set_blogs_categories_data(initial_blogs_data);
+
+            console.log('bye world');
+
+            set_load_index(-1);
+        }
+        catch(e){
+            console.log(e);
         }
 
     },[])
@@ -228,12 +171,14 @@ function BlogsContainer(props){
         }}
         >
             <IconHeading icon_url={blogs_icon} visible_toggle={0} text={"Blogs And Reviews"} input_present="1" right_text={"Subscribe to our monthly Newsletter to Receive Updates On Blogs"}/>
-            <BlogDisplay {...element}/>
-            {
-                blogs_categories_data.map((element, index)=>{
-                    return <BlogGridUnit key={index} {...element}/>
-                })
-            }
+            <CurrentBlogContext.Provider value={[current_blog_data , set_current_blog_data]}>
+                <BlogDisplay {...element}/>
+                {
+                    blogs_categories_data.map((element, index)=>{
+                        return <BlogGridUnit key={index} {...element}/>
+                    })
+                }
+            </CurrentBlogContext.Provider>
         </li>
     );
 }
