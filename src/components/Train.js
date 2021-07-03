@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../stylesheets/TrainAssembly.css';
-import {gsap} from 'gsap';
 
 
 function Train(props){

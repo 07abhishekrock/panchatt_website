@@ -1,5 +1,6 @@
-import {useRef , useEffect} from 'react';
+import {useRef , useEffect, useContext} from 'react';
 import {StoreNewSubscriber} from '../utlities/constants';
+import {ModalContext} from '../utlities/Contexts';
 
 function IconHeading(props){
     return(
@@ -19,6 +20,7 @@ function IconHeading(props){
 function InputWithButton(props){
     let form = useRef(null);
     let email_input = useRef(null);
+    let [,set_modal_state] = useContext(ModalContext);
     return(
         <form ref={form}>
             <div className="input-with-button">
@@ -29,14 +31,26 @@ function InputWithButton(props){
                         if(form.current.checkValidity())
                         {
                             await StoreNewSubscriber(email_input.current.value);
-                            window.alert('You are successfully registered');
+                            set_modal_state({
+                                state:true,
+                                heading:'Registered',
+                                content:'You are successfully registered for the newsletter via mail. You will receive timely notifications when site is updated with a new blog.'
+                            })
                         }
                         else{
-                            window.alert("please enter a valid email");
+                            set_modal_state({
+                                state:true,
+                                heading:'Invalid Email',
+                                content:'Please Enter a valid email to continue'
+                            })
                         }
                     }
                     catch(e){
-                        window.alert(e);
+                        set_modal_state({
+                                state:true,
+                                heading:'Server Error',
+                                content:e.message
+                            })
                     }
                 }}>{props.button_text}</button>
             </div>

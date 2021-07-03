@@ -16,6 +16,9 @@ let CurrentPlayingVideoContext = React.createContext();
 //current blog being displayed
 let CurrentBlogContext = React.createContext();
 
+
+let ModalContext = React.createContext();
+
 export {
     CurrentMediaWindow, 
     VideoLoadingIndex,
@@ -23,5 +26,6 @@ export {
     ResizeStackContext, 
     VideoAllLoadedContext, 
     CurrentPlayingVideoContext,
-    CurrentBlogContext
+    CurrentBlogContext, 
+    ModalContext
 };

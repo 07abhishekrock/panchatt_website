@@ -2,7 +2,7 @@ import {useRef , useEffect, useState, useContext} from 'react';
 import bg from '../image/sample_images/pranks_blog_background.jpg'
 import { IconHeading , SubHeading } from './misc';
 import blogs_icon from '../image/icons/blogs.svg';
-import { CurrentMediaWindow , CurrentBlogContext ,BlogLoadingIndex} from '../utlities/Contexts';
+import { CurrentMediaWindow , CurrentBlogContext ,BlogLoadingIndex, ModalContext} from '../utlities/Contexts';
 import { LoadAllCategories , getBlogsByCategory , getSingleBlog} from '../utlities/constants';
 
 
@@ -62,6 +62,7 @@ function BlogDisplay(props){
 function BlogUnit(props){
 
     let [current_blog_data , set_current_blog_data] = useContext(CurrentBlogContext);
+    let [ , set_modal_state] = useContext(ModalContext);
 
     return(<div className="blog-unit" onClick={async ()=>{
         try{
@@ -73,7 +74,11 @@ function BlogUnit(props){
             }
         }
         catch(e){
-
+            set_modal_state({
+                state:true,
+                heading:'Server Error',
+                content:e.message
+            })
         }
     }}>
         <img style={{objectFit:'cover'}} src={props.url}/>
@@ -127,6 +132,8 @@ function BlogsContainer(props){
 
     let [current_blog_data , set_current_blog_data] = useState({});
 
+    let [ , set_modal_state] = useContext(ModalContext);
+
     let element = {
         date_created : '30 Apr 2020',
         glance_content : '7 Companies that started off as a joke but eventually turned succesfull',
@@ -155,12 +162,14 @@ function BlogsContainer(props){
             }
             set_blogs_categories_data(initial_blogs_data);
 
-            console.log('bye world');
-
             set_load_index(-1);
         }
         catch(e){
-            console.log(e);
+            set_modal_state({
+                state:true,
+                heading:'Server Error',
+                content:e.message
+            })
         }
 
     },[])

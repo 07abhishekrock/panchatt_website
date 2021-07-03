@@ -1,0 +1,38 @@
+div.modal-bg{
+    background-color:rgba(0,0,0,0.7);
+    overflow:hidden;
+    position:fixed;
+    inset:0px 0px 0px 0px;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:opacity 0.1s ease-in;
+}
+div.modal-bg>div.modal{
+    text-align:center;
+    width:400px;
+    padding:1em;
+    box-sizing: border-box;
+    border-radius:0.5em;
+    background-color:white;
+    transition:inherit;
+    position:relative;
+}
+div.modal-bg>div.modal>.modal-cross{
+    width:1.5em;
+    height:1.5em;
+    position:absolute;
+    right:10px;
+    top:10px;
+    background-size:contain;
+    cursor:pointer;
+    background-image:url('../image/icons/cross_modal.svg');
+    background-position:center;
+    background-repeat: no-repeat;
+    display:block;
+}
+div.modal-bg[visible="0"]{
+    opacity:0;
+    pointer-events:none;
+}

@@ -80,23 +80,16 @@ async function generatePlaylist_List(){
 }
 
 async function LoadAllCategories(){
-    try{
-        let allCategories_response = await axios.get(NATIVE_DOMAIN + '/api/categoryList');
-        let allCategories_data = allCategories_response.data;
-        if(allCategories_data.data && allCategories_data.data.length > 0){
-            return allCategories_data.data.map((element)=>{
-                return element.categoryName
-            })
-        }
-    }
-    catch(e){
-        alert(e);
-        console.log(e);
+    let allCategories_response = await axios.get(NATIVE_DOMAIN + '/api/categoryList');
+    let allCategories_data = allCategories_response.data;
+    if(allCategories_data.data && allCategories_data.data.length > 0){
+        return allCategories_data.data.map((element)=>{
+            return element.categoryName
+        })
     }
 }
 
 async function getBlogsByCategory(category_string , pageValue = 0 , limit = 6){
-    try{
         category_string = category_string.toLowerCase();
         let blogs_array_response = await axios.get(NATIVE_DOMAIN + '/api/FindBlogByCategory/' + category_string + '?page=' + pageValue + '&limit=' + limit);
         let blogs_array_data = blogs_array_response.data;
@@ -116,14 +109,9 @@ async function getBlogsByCategory(category_string , pageValue = 0 , limit = 6){
         }
         final_blogs_data.pageValue = pageValue + 1;
         return final_blogs_data;
-    }
-    catch(e){
-        console.log(e);
-    }
 }
 
 async function getSingleBlog(blog_id){
-    try{
         let single_blog_response = await axios.get(NATIVE_DOMAIN + '/api/blog/' + blog_id);
         if(single_blog_response.data.single_blog){
             let element = single_blog_response.data.single_blog;
@@ -138,15 +126,9 @@ async function getSingleBlog(blog_id){
                 id:element._id
             }
         }
-    }
-    catch(e){
-        console.log(e);
-    }
 }
 
 async function StoreNewSubscriber(email){
-    try{
-        console.log(email);
         await axios({
             method:'POST',
             url:NATIVE_DOMAIN + '/api/subscriber',
@@ -154,10 +136,6 @@ async function StoreNewSubscriber(email){
                 entered_email : email
             }
         });
-    }
-    catch(e){
-        console.log(e);
-    }
 }
 
 export  {

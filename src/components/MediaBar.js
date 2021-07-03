@@ -11,6 +11,7 @@ import about_us_box from '../image/icons/about_us_box.svg';
 import {CurrentMediaWindow , VideoLoadingIndex , BlogLoadingIndex} from '../utlities/Contexts';
 import BlogsContainer  from './BlogContainer';
 import VideoContainer from './VideoContainer';
+import ComingSoon from './ComingSoon';
 
 function MediaIntroBar(props){
     let [select_index, set_select_index] = useContext(CurrentMediaWindow);
@@ -77,7 +78,7 @@ function MediaIntroBar(props){
     return(
         <div className="media-intro-bar" >
             <div>
-                <div className="about-us-section">
+                <div className="about-us-section" id="about-us">
                     <div className="left-section">
                         <h2>About Us</h2>
                         <p ref={para_main}>Find with us your <b>interests</b> like reading , listening and watching. </p>
@@ -125,12 +126,22 @@ function MediaIntroBar(props){
                     onClick={()=>{
                         set_select_index(1);
                     }}>Videos</span>
+                    <span 
+                    select={select_index === 2 ? 1 : 0} 
+                    onClick={()=>{
+                        set_select_index(2);
+                    }}>Podcasts</span>
+                    <span 
+                    select={select_index === 3 ? 1 : 0} 
+                    onClick={()=>{
+                        set_select_index(3);
+                    }}>MeeMays</span>
                 </div>
                 <button className="left top" disable = {select_index === 0 ? 1 : 0} onClick={()=>{
-                    set_select_index((select_index - 1) % 2 >= 0 ? (select_index - 1) % 2 : 0);
+                    set_select_index((select_index - 1) % 4 >= 0 ? (select_index - 1) % 4 : 0);
                 }}></button>
-                <button className="right top" disable = {select_index === 1 ? 1 : 0} onClick={()=>{
-                    set_select_index(select_index === 1 ? 1 : (select_index + 1) % 2);
+                <button className="right top" disable = {select_index === 3 ? 1 : 0} onClick={()=>{
+                    set_select_index(select_index === 3 ? 3 : (select_index + 1) % 4);
                 }}></button>
             </div>
         </div>
@@ -144,10 +155,12 @@ function MediaContainer(props){
 
 
     return(
-            <div className="media-container-wrapper">
+            <div className="media-container-wrapper" id="media">
                 <ul className="media-container" style={{transform:`translateX(${-100 * window_index}%)`}}>
                     <BlogsContainer/>
                     <VideoContainer/>
+                    <ComingSoon/>
+                    <ComingSoon/>
                 </ul>
             </div>
     );
